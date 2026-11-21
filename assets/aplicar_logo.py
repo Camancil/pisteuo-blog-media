@@ -1,6 +1,6 @@
 """Agrega el logo oficial de Odoo en la esquina superior izquierda de una portada 1200x630.
-Por defecto: logo a color sobre placa blanca. Con --blanco: logo blanco sobre placa morada #714B67.
-Uso: python3 aplicar_logo.py entrada.jpg salida.jpg [--blanco]
+Por defecto: logo blanco sobre placa morada #714B67 (preferencia de Carlos). Con --color: logo a color sobre placa blanca.
+Uso: python3 aplicar_logo.py entrada.jpg salida.jpg [--color]
 """
 import sys
 from pathlib import Path
@@ -13,7 +13,7 @@ LOGO_W, MARGIN, PAD, RADIUS = 170, 36, 18, 16
 PURPLE = (113, 75, 103, 235)  # #714B67
 WHITE = (255, 255, 255, 235)
 
-def portada(src, dst, blanco=False):
+def portada(src, dst, blanco=True):
     im = Image.open(src).convert("RGB")
     r = max(W / im.width, H / im.height)
     im = im.resize((round(im.width * r), round(im.height * r)), Image.LANCZOS)
@@ -30,4 +30,4 @@ def portada(src, dst, blanco=False):
     im.convert("RGB").save(dst, quality=85, optimize=True)
 
 if __name__ == "__main__":
-    portada(sys.argv[1], sys.argv[2], blanco="--blanco" in sys.argv)
+    portada(sys.argv[1], sys.argv[2], blanco="--color" not in sys.argv)
